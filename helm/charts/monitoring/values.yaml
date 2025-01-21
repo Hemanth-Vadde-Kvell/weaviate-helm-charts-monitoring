@@ -1,0 +1,21 @@
+weaviate:
+  replicas: 1
+  image:
+    repository: semitechnologies/weaviate
+    tag: 1.14.1
+  storage:
+    size: 10Gi
+
+prometheus:
+  image:
+    repository: prom/prometheus
+    tag: v2.36.2
+  storage:
+    size: 10Gi
+
+grafana:
+  image:
+    repository: grafana/grafana-oss
+    tag: latest
+  storage:
+    size: 10Gi 

@@ -1,0 +1,8 @@
+apiVersion: v2
+name: monitoring-stack
+description: A Helm chart for Weaviate with Prometheus and Grafana monitoring
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+maintainers:
+  - name: "Weaviate Team" 
