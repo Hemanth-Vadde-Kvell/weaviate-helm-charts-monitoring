@@ -41,9 +41,35 @@ spec:
       containers:
       - name: grafana
         image: "{{ .Values.grafana.image.repository }}:{{ .Values.grafana.image.tag }}"
+        imagePullPolicy: IfNotPresent
+        resources:
+          {{- toYaml .Values.grafana.resources | nindent 10 }}
+        env:
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: "admin"
+        - name: GF_SECURITY_ADMIN_USER
+          value: "admin"
+        - name: GF_AUTH_ANONYMOUS_ENABLED
+          value: "true"
+        - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+          value: "Viewer"
+        - name: GF_AUTH_BASIC_ENABLED
+          value: "true"
         ports:
         - containerPort: 3000
           name: http
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
         volumeMounts:
         - name: grafana-storage
           mountPath: /var/lib/grafana
